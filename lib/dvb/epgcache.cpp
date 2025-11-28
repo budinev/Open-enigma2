@@ -1625,16 +1625,16 @@ void fillTuple(ePyObject tuple, const char *argstring, int argcount, ePyObject s
 		switch((c=argstring[spos++]))
 		{
 			case '0': // PyLong 0
-				tmp = PyInt_FromLong(0);
+				tmp = PyLong_FromLong(0);
 				break;
 			case 'I': // Event Id
-				tmp = evData ? PyInt_FromLong(evData->getEventID()) : (ptr ? PyInt_FromLong(ptr->getEventId()) : ePyObject());
+				tmp = evData ? PyLong_FromLong(evData->getEventID()) : (ptr ? PyLong_FromLong(ptr->getEventId()) : ePyObject());
 				break;
 			case 'B': // Event Begin Time
-				tmp = ptr ? PyInt_FromLong(ptr->getBeginTime()) : (evData ? PyInt_FromLong(evData->getStartTime()) : ePyObject());
+				tmp = ptr ? PyLong_FromLong(ptr->getBeginTime()) : (evData ? PyLong_FromLong(evData->getStartTime()) : ePyObject());
 				break;
 			case 'D': // Event Duration
-				tmp = ptr ? PyInt_FromLong(ptr->getDuration()) : (evData ? PyInt_FromLong(evData->getDuration()) : ePyObject());
+				tmp = ptr ? PyLong_FromLong(ptr->getDuration()) : (evData ? PyLong_FromLong(evData->getDuration()) : ePyObject());
 				break;
 			case 'T': // Event Title
 				tmp = ptr ? PyUnicode_FromString(ptr->getEventName().c_str()) : ePyObject();
@@ -1798,7 +1798,7 @@ PyObject *eEPGCache::lookupEvent(ePyObject list, ePyObject convertFunc)
 	}
 
 	ePyObject nowTime = strchr(argstring, 'C') ?
-		PyInt_FromLong(::time(0)) :
+		PyLong_FromLong(::time(0)) :
 		ePyObject();
 
 	int must_get_service_name = strchr(argstring, 'N') ? 1 : strchr(argstring, 'n') ? 2 : 0;
@@ -2392,8 +2392,8 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 			return;
 		}
 
-		long start = PyInt_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 0));
-		long duration = PyInt_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 1));
+		long start = PyLong_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 0));
+		long duration = PyLong_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 1));
 		const char *title = getStringFromPython(PyTuple_GET_ITEM(singleEvent, 2));
 		const char *short_summary = getStringFromPython(PyTuple_GET_ITEM(singleEvent, 3));
 		const char *long_description = getStringFromPython(PyTuple_GET_ITEM(singleEvent, 4));
@@ -2405,11 +2405,11 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 			event_types.reserve(numberOfEventTypes);
 			for (int j = 0; j < numberOfEventTypes;  ++j)
 			{
-				uint8_t event_type = (uint8_t) PyInt_AsUnsignedLongMask(eventTypeIsTuple ? PyTuple_GET_ITEM(eventTypeList, j) : PyList_GET_ITEM(eventTypeList, j));
+				uint8_t event_type = (uint8_t) PyLong_AsUnsignedLongMask(eventTypeIsTuple ? PyTuple_GET_ITEM(eventTypeList, j) : PyList_GET_ITEM(eventTypeList, j));
 				event_types.push_back(event_type);
 			}
 		} else if (PyLong_Check(eventTypeList)) {
-			uint8_t event_type = (uint8_t) PyInt_AsUnsignedLongMask(eventTypeList);
+			uint8_t event_type = (uint8_t) PyLong_AsUnsignedLongMask(eventTypeList);
 			event_types.push_back(event_type);
 		} else {
 			eDebug("[eEPGCache:import] event type must be a single integer or a list or tuple of integers, aborting");
@@ -2419,7 +2419,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 		uint16_t eventId = 0;
 		if (tupleSize >= 7)
 		{
-			eventId = (uint16_t) PyInt_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 6));
+			eventId = (uint16_t) PyLong_AsUnsignedLongMask(PyTuple_GET_ITEM(singleEvent, 6));
 		}
 
 		std::vector<eit_parental_rating> parental_ratings;
@@ -2446,7 +2446,7 @@ void eEPGCache::importEvents(ePyObject serviceReferences, ePyObject list)
 					}
 					eit_parental_rating p_rating;
 					memcpy(p_rating.country_code, country, 3);
-					u_char rating = (u_char) PyInt_AsUnsignedLongMask(PyTuple_GET_ITEM(parentalInfo, 1));
+					u_char rating = (u_char) PyLong_AsUnsignedLongMask(PyTuple_GET_ITEM(parentalInfo, 1));
 					p_rating.rating = rating;
 					parental_ratings.push_back(p_rating);
 				}
