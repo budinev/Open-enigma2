@@ -98,6 +98,12 @@ class eDVBScan: public sigc::trackable, public iObject
 	int m_networkid;
 	bool m_usePAT;
 	bool m_scan_debug;
+    FILE *m_lcn_file;
+
+        std::map<eDVBChannelID, uint32_t> m_aus_da_flags;
+
+
+        std::map<eDVBChannelID, std::string> m_default_authorities;
 public:
 	eDVBScan(iDVBChannel *channel, bool usePAT=true, bool debug=true );
 	~eDVBScan();
