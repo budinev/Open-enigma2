@@ -938,7 +938,7 @@ PyObject *eDVBCIInterfaces::getDescrambleRules(int slotid)
 	{
 		char tmp[255];
 		snprintf(tmp, 255, "eDVBCIInterfaces::getDescrambleRules try to get rules for CI Slot %d... but just %zd slots are available", slotid, m_slots.size());
-		PyErr_SetString(PyExc_ValueError, tmp);
+		PyErr_SetString(PyExc_StandardError, tmp);
 		return 0;
 	}
 	ePyObject tuple = PyTuple_New(3);
@@ -991,7 +991,7 @@ RESULT eDVBCIInterfaces::setDescrambleRules(int slotid, SWIG_PYOBJECT(ePyObject)
 	{
 		char tmp[255];
 		snprintf(tmp, 255, "eDVBCIInterfaces::setDescrambleRules try to set rules for CI Slot %d... but just %zd slots are available", slotid, m_slots.size());
-		PyErr_SetString(PyExc_ValueError, tmp);
+		PyErr_SetString(PyExc_StandardError, tmp);
 		return -1;
 	}
 	if (!PyTuple_Check(obj))
@@ -1115,7 +1115,7 @@ PyObject *eDVBCIInterfaces::readCICaIds(int slotid)
 	{
 		char tmp[255];
 		snprintf(tmp, 255, "eDVBCIInterfaces::readCICaIds try to get CAIds for CI Slot %d... but just %zd slots are available", slotid, m_slots.size());
-		PyErr_SetString(PyExc_ValueError, tmp);
+		PyErr_SetString(PyExc_StandardError, tmp);
 	}
 	else
 	{
