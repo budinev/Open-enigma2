@@ -1637,13 +1637,13 @@ void fillTuple(ePyObject tuple, const char *argstring, int argcount, ePyObject s
 				tmp = ptr ? PyLong_FromLong(ptr->getDuration()) : (evData ? PyLong_FromLong(evData->getDuration()) : ePyObject());
 				break;
 			case 'T': // Event Title
-				tmp = ptr ? PyUnicode_FromString(ptr->getEventName().c_str()) : ePyObject();
+				tmp = ptr ? ePyObject(PyUnicode_FromString(ptr->getEventName().c_str())) : ePyObject();
 				break;
 			case 'S': // Event Short Description
-				tmp = ptr ? PyUnicode_FromString(ptr->getShortDescription().c_str()) : ePyObject();
+				tmp = ptr ? ePyObject((PyUnicode_FromString(ptr->getShortDescription().c_str()))) : ePyObject();
 				break;
 			case 'E': // Event Extended Description
-				tmp = ptr ? PyUnicode_FromString(ptr->getExtendedDescription().c_str()) : ePyObject();
+				tmp = ptr ? ePyObject(PyUnicode_FromString(ptr->getExtendedDescription().c_str())) : ePyObject();
 				break;
 			case 'P': // Event Parental Rating
 				tmp = ptr ? ePyObject(ptr->getParentalData()) : ePyObject();
@@ -1666,8 +1666,6 @@ void fillTuple(ePyObject tuple, const char *argstring, int argcount, ePyObject s
 				break;
 			case 'X':
 				++argcount;
-				continue;
-			case 'M': // GN return 10 items only
 				continue;
 			default:  // ignore unknown
 				tmp = ePyObject();
