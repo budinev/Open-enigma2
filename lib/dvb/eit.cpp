@@ -201,7 +201,7 @@ void eDVBServiceEITHandler::start(iDVBDemux *demux, const eServiceReferenceDVB &
 	else
 	{
 		m_sid = ref.getParentServiceID().get();
-		if (!m_sid
+		if (!m_sid)
 		{
 			m_sid = ref.getServiceID().get();
 		}
