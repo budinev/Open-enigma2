@@ -132,6 +132,7 @@ class eServiceEvent: public iObject
 	static std::string crid_scheme;
 	static std::string normalise_crid(std::string crid, ePtr<eDVBService> service);
     bool loadLanguage(Event *event, const std::string &lang, int tsidonid, int sid);
+    std::list<eComponentData> m_component_data;
 	std::list<eServiceReference> m_linkage_services;
 	std::list<eGenreData> m_genres;
 	std::list<eParentalData> m_ratings;
