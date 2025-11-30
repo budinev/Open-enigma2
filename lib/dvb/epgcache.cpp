@@ -1698,7 +1698,7 @@ int handleEvent(eServiceEvent *ptr, ePyObject dest_list, const char* argstring, 
 				Py_DECREF(nowTime);
 			Py_DECREF(convertFuncArgs);
 			Py_DECREF(dest_list);
-			PyErr_SetString(PyExc_StandardError, "[eEPGCache] handleEvent: error in convertFunc execute");
+			PyErr_SetString(PyExc_Exception, "[eEPGCache] handleEvent: error in convertFunc execute");
 			//eDebug("[eEPGCache] handleEvent: error in convertFunc execute");
 			return -1;
 		}
